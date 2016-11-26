@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="CampModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="CampModelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="CampModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="CampModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Campers" EntityType="CampModel.Camper" />
+          <EntitySet Name="Guardians1" EntityType="CampModel.Guardian" />
+          <AssociationSet Name="CamperGuardian" Association="CampModel.CamperGuardian">
+            <End Role="Camper" EntitySet="Campers" />
+            <End Role="Guardian" EntitySet="Guardians1" />
+          </AssociationSet>
+          <EntitySet Name="Payments" EntityType="CampModel.Payment" />
+          <AssociationSet Name="PaymentCamper" Association="CampModel.PaymentCamper">
+            <End Role="Payment" EntitySet="Payments" />
+            <End Role="Camper" EntitySet="Campers" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Camper">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FamilyName" Type="String" Nullable="false" />
+          <Property Name="GivenName" Type="String" Nullable="false" />
+          <Property Name="Gender" Type="CampModel.Gender" Nullable="false" />
+          <Property Name="HasMedRelease" Type="Boolean" Nullable="false" />
+          <Property Name="HasWaiver" Type="Boolean" Nullable="false" />
+          <Property Name="Church" Type="String" Nullable="false" />
+          <Property Name="Friends" Type="String" Nullable="false" />
+          <Property Name="ShirtSize" Type="CampModel.ShirtSize" Nullable="false" />
+          <Property Name="DayLength" Type="CampModel.DayLength" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" />
+          <Property Name="SchoolYear" Type="CampModel.SchoolYear" Nullable="false" />
+          <NavigationProperty Name="Guardians" Relationship="CampModel.CamperGuardian" FromRole="Camper" ToRole="Guardian" />
+          <NavigationProperty Name="Payment" Relationship="CampModel.PaymentCamper" FromRole="Camper" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="Guardian">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Campers" Relationship="CampModel.CamperGuardian" FromRole="Guardian" ToRole="Camper" />
+        </EntityType>
+        <Association Name="CamperGuardian">
+          <End Type="CampModel.Camper" Role="Camper" Multiplicity="*" />
+          <End Type="CampModel.Guardian" Role="Guardian" Multiplicity="*" />
+        </Association>
+        <EnumType Name="Gender" UnderlyingType="Byte">
+          <Member Name="Male" />
+          <Member Name="Female" />
+        </EnumType>
+        <EnumType Name="ShirtSize" UnderlyingType="Byte">
+          <Member Name="ExtraSmall" />
+          <Member Name="Small" />
+          <Member Name="Medium" />
+          <Member Name="Large" />
+          <Member Name="ExtraLarge" />
+        </EnumType>
+        <EnumType Name="DayLength" UnderlyingType="Byte">
+          <Member Name="Full" />
+          <Member Name="Half" />
+        </EnumType>
+        <EnumType Name="SchoolYear" UnderlyingType="SByte">
+          <Member Name="Preschool" Value="-1" />
+          <Member Name="Kindergarten" Value="0" />
+          <Member Name="One" Value="1" />
+          <Member Name="Two" Value="2" />
+          <Member Name="Three" Value="3" />
+          <Member Name="Four" Value="4" />
+          <Member Name="Five" Value="5" />
+          <Member Name="Six" Value="6" />
+        </EnumType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Payer" Type="String" Nullable="false" />
+          <Property Name="PaymentType" Type="CampModel.PaymentType" Nullable="false" />
+          <Property Name="Notes" Type="String" Nullable="false" />
+          <NavigationProperty Name="Campers" Relationship="CampModel.PaymentCamper" FromRole="Payment" ToRole="Camper" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" />
+        </EntityType>
+        <EnumType Name="PaymentType" UnderlyingType="Byte">
+          <Member Name="Cash" />
+          <Member Name="Cheque" />
+        </EnumType>
+        <Association Name="PaymentCamper">
+          <End Type="CampModel.Payment" Role="Payment" Multiplicity="1" />
+          <End Type="CampModel.Camper" Role="Camper" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="CampModel" />
+        <Alias Key="Target" Value="CampModel.Store" />
+        <EntityContainerMapping CdmEntityContainer="CampModelContainer" StorageEntityContainer="CampModelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

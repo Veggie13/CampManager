@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="57250176a1f743588e6676d72b135910" Name="Diagram1" >
+        <EntityTypeShape EntityType="CampModel.Camper" Width="1.875" PointX="2" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampModel.Guardian" Width="2" PointX="5.125" PointY="2.5" />
+        <AssociationConnector Association="CampModel.CamperGuardian" />
+        <EntityTypeShape EntityType="CampModel.Payment" Width="2" PointX="5.125" PointY="4.25" />
+        <AssociationConnector Association="CampModel.PaymentCamper" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
